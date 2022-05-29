@@ -23,7 +23,7 @@ router.post("/signup", async (req, res) => {
     res.status(400);
     const data = {
       statusCode: 400,
-      message: "Error in registering the user",
+      message: e?.message || "Error Occured",
     };
     res.send(data);
   }
