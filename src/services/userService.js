@@ -1,6 +1,7 @@
 const yup = require("yup");
 const uuid = require("uuid");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const userRepository = require("../repositories/userRepository");
 
@@ -18,6 +19,10 @@ const logInSchema = yup.object().shape({
   username: yup.string().required(),
   password: yup.string().required().min(8).max(15),
 });
+
+function generateAccessToken(username) {
+  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
+}
 
 async function logInUser(username, password) {
   var res = null;
@@ -48,7 +53,8 @@ async function logInUser(username, password) {
           message: "User succesfully logged in!",
           statusCode: 200,
           data: {
-            ...userObj,
+            user: { ...userObj },
+            token: generateAccessToken({ username }),
           },
         });
       } else {
