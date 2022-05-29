@@ -12,9 +12,14 @@ app.use(bodyParser.json());
 
 app.use("/api/user", logController);
 
-app.listen(process.env.PORT || 9000, () => {
+app.listen(9000, () => {
   console.log("server started succesfully");
-  pool.connect().then((res) => {
-    console.log("Database connected: ");
-  });
+  pool
+    .connect()
+    .then((res) => {
+      console.log("Database connected");
+    })
+    .catch((err) => {
+      console.log("Error in connecting to the database");
+    });
 });

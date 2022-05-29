@@ -3,9 +3,8 @@ const uuid = require("uuid");
 const bcrypt = require("bcryptjs");
 
 const userRepository = require("../repositories/userRepository");
-const e = require("express");
 
-const schema = yup.object().shape({
+const signUpSchema = yup.object().shape({
   username: yup.string().required(),
   password: yup.string().required().min(8).max(15),
   name: yup.string().required(),
@@ -15,9 +14,49 @@ const schema = yup.object().shape({
   address: yup.string().required(),
 });
 
-const logInUser = (username, password) => {
-  userRepository.getUser(username);
-};
+const logInSchema = yup.object().shape({
+  username: yup.string().required(),
+  password: yup.string().required().min(8).max(15),
+});
+
+async function logInUser(username, password) {
+  var res = null;
+  try {
+    await logInSchema.validate({ username: username, password: password });
+  } catch (e) {
+    throw Error("Error in validating the data");
+  }
+  try {
+    res = await userRepository.getUser(username);
+  } catch (err) {
+    throw Error("Error occured while getting the user");
+  }
+
+  if (res?.rowCount === 0) {
+    throw Error("User not found");
+  }
+  const user = res.rows[0];
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(password, user.password, async (err, isMatch) => {
+      if (err) {
+        reject(err);
+      }
+      if (isMatch) {
+        const userObj = { ...user };
+        delete userObj.password;
+        resolve({
+          message: "User succesfully logged in!",
+          statusCode: 200,
+          data: {
+            ...userObj,
+          },
+        });
+      } else {
+        reject("Passwords do not match!");
+      }
+    });
+  });
+}
 
 async function signUpUser(userData) {
   const { username, password, name, userType, phoneNumber, dob, address } =
@@ -26,7 +65,7 @@ async function signUpUser(userData) {
   var userExistance = null;
 
   try {
-    await schema.validate({
+    await signUpSchema.validate({
       username: username,
       password: password,
       name: name,

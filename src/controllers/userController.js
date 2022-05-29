@@ -4,9 +4,18 @@ const userService = require("../services/userService");
 
 const router = express.Router();
 
-router.get("/login", (req, res) => {
-  userService.logInUser(req.body.username, req.body.password);
-  res.send("Login succesgfull");
+router.get("/login", async (req, res) => {
+  try {
+    const data = await userService.logInUser(
+      req.body.username,
+      req.body.password
+    );
+    res.status(200);
+    res.send(data);
+  } catch (e) {
+    res.status(400);
+    res.send(e);
+  }
 });
 
 router.post("/signup", async (req, res) => {
