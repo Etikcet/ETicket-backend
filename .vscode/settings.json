@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/93cb6a2c-520e-4389-b2af-62e9d161d627/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/eticketbackend",
+  "appService.deploySubpath": "."
+}
