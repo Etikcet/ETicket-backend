@@ -107,11 +107,10 @@ async function signUpUser(userData) {
                     ID: ID,
                     username: username,
                     name: name,
-
                     phoneNumber,
-
                     userType: userType,
                   },
+                  token: generateAccessToken({ username }),
                 },
               });
             } catch (e) {
