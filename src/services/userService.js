@@ -11,8 +11,6 @@ const signUpSchema = yup.object().shape({
   name: yup.string().required(),
   userType: yup.string().required(),
   phoneNumber: yup.string().length(10).required(),
-  dob: yup.date().required(),
-  address: yup.string().required(),
 });
 
 const logInSchema = yup.object().shape({
@@ -65,8 +63,7 @@ async function logInUser(username, password) {
 }
 
 async function signUpUser(userData) {
-  const { username, password, name, userType, phoneNumber, dob, address } =
-    userData;
+  const { username, password, name, userType, phoneNumber } = userData;
 
   var userExistance = null;
 
@@ -77,8 +74,6 @@ async function signUpUser(userData) {
       name: name,
       userType: userType,
       phoneNumber: phoneNumber,
-      dob: dob,
-      address: address,
     });
   } catch (error) {
     throw Error("Validation Error");
@@ -112,9 +107,9 @@ async function signUpUser(userData) {
                     ID: ID,
                     username: username,
                     name: name,
-                    address: address,
+
                     phoneNumber,
-                    dob: dob,
+
                     userType: userType,
                   },
                 },
