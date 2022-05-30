@@ -14,7 +14,7 @@ async function getUser(username) {
 async function addUser(userData) {
   try {
     const res = await pool.query(
-      "INSERT INTO users (ID,username,password,name,user_type,phone_number,dob,address) values ($1,$2,$3,$4,$5,$6,$7,$8)",
+      "INSERT INTO users (ID,username,password,name,user_type,phone_number) values ($1,$2,$3,$4,$5,$6)",
       [
         userData.ID,
         userData.username,
@@ -22,8 +22,6 @@ async function addUser(userData) {
         userData.name,
         userData.userType,
         userData.phoneNumber,
-        userData.dob,
-        userData.address,
       ]
     );
   } catch (error) {
