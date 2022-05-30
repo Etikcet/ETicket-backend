@@ -4,7 +4,8 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 const pool = require("./src/config/database.conf");
 
-const logController = require("./src/controllers/userController");
+const userController = require("./src/controllers/userController");
+const routeController = require("./src/controllers/routeController");
 
 const app = express();
 
@@ -12,7 +13,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use("/api/user", logController);
+app.use("/api/user", userController);
+app.use("/api/route", routeController);
 
 app.listen(process.env.PORT || 9000, () => {
   console.log("server started succesfully");
