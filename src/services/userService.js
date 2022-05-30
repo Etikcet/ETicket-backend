@@ -18,8 +18,8 @@ const logInSchema = yup.object().shape({
   password: yup.string().required().min(8).max(15),
 });
 
-function generateAccessToken(username) {
-  return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
+function generateAccessToken(userObj) {
+  return jwt.sign(userObj, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
 }
 
 async function logInUser(username, password) {
@@ -52,7 +52,11 @@ async function logInUser(username, password) {
           statusCode: 200,
           data: {
             user: { ...userObj },
-            token: generateAccessToken({ username }),
+            token: generateAccessToken({
+              username: username,
+              userType: userObj.user_type,
+              ID: userObj.ID,
+            }),
           },
         });
       } else {
@@ -110,7 +114,11 @@ async function signUpUser(userData) {
                     phoneNumber,
                     userType: userType,
                   },
-                  token: generateAccessToken({ username }),
+                  token: generateAccessToken({
+                    username: username,
+                    userType: userType,
+                    ID: ID,
+                  }),
                 },
               });
             } catch (e) {
