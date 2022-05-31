@@ -31,8 +31,18 @@ async function addRoute(route) {
   }
 }
 
+async function deleteRoute(routeId) {
+  try {
+    const res = await pool.query("DELETE FROM Route WHERE ID = $1", [routeId]);
+    return true;
+  } catch (error) {
+    throw Error("Internal Server Error");
+  }
+}
+
 module.exports = {
   addRoute,
   getRoute,
   getAllRoutes,
+  deleteRoute,
 };

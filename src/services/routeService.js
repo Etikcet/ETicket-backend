@@ -59,8 +59,29 @@ async function addRoute(route) {
   }
 }
 
+async function deleteRoute(routeId) {
+  if (routeId === null) {
+    throw Error("Validation Error");
+  }
+  try {
+    const existance = await routeRepository.getRoute(routeId);
+    if (existance.rowCount === 0) {
+      throw Error("Route not found");
+    }
+  } catch (error) {
+    throw error;
+  }
+  try {
+    const res = await routeRepository.deleteRoute(routeId);
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   addRoute,
   getRoute,
   getAllRoutes,
+  deleteRoute,
 };
