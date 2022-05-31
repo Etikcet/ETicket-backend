@@ -7,7 +7,7 @@ async function getUser(username) {
     ]);
     return res;
   } catch (error) {
-    throw error;
+    throw Error("Internal Server Error");
   }
 }
 
@@ -25,7 +25,7 @@ async function addUser(userData) {
       ]
     );
   } catch (error) {
-    throw error;
+    throw Error("Internal Server Error");
   }
 }
 

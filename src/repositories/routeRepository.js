@@ -5,7 +5,7 @@ async function getAllRoutes() {
     const res = await pool.query("SELECT * FROM Route");
     return res;
   } catch (error) {
-    throw error;
+    throw Error("Internal Server Error");
   }
 }
 
@@ -14,7 +14,7 @@ async function getRoute(ID) {
     const res = await pool.query("SELECT * FROM Route WHERE ID = $1", [ID]);
     return res;
   } catch (error) {
-    throw error;
+    throw Error("Internal Server Error");
   }
 }
 
@@ -27,7 +27,7 @@ async function addRoute(route) {
     );
     return true;
   } catch (error) {
-    throw error;
+    throw Error("Internal Server Error");
   }
 }
 
