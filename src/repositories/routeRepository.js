@@ -1,5 +1,18 @@
 const pool = require("../config/database.conf");
 
+async function checkAvailableRoutes(details) {
+  const { start, finish, date, seats } = details;
+  try {
+    const res = await pool.query(
+      "SELECT route.id AS route_id,bus.id AS bus_id,start,finish,seat,driver,conductor,contact_number FROM Route,bus WHERE Route.id = Bus.route_id AND start = $1 AND finish = $2 AND seat < $3",
+      [start, finish, seats]
+    );
+    return res;
+  } catch (error) {
+    throw Error("Internal Server Error");
+  }
+}
+
 async function getAllRoutes() {
   try {
     const res = await pool.query("SELECT * FROM Route");
@@ -45,4 +58,5 @@ module.exports = {
   getRoute,
   getAllRoutes,
   deleteRoute,
+  checkAvailableRoutes,
 };
