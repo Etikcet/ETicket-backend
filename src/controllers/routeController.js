@@ -37,6 +37,20 @@ router.get("/get/:ID", async (req, res) => {
   }
 });
 
+router.delete("/delete/:ID", async (req, res) => {
+  try {
+    const reponse = await routeService.deleteRoute(req.params.ID);
+    res.status(200);
+    res.send({
+      message: "Route deleted succesfully",
+      statusCode: 200,
+    });
+  } catch (error) {
+    res.status(400);
+    res.send({ message: error.message, statusCode: 400 });
+  }
+});
+
 router.post(
   "/add",
   (req, res, next) => authenticateToken(req, res, next, "ADMIN"),
