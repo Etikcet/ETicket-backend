@@ -4,7 +4,7 @@ const userService = require("../services/userService");
 
 const router = express.Router();
 
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const data = await userService.logInUser(
       req.body.username,
