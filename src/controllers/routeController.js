@@ -5,6 +5,20 @@ const router = express.Router();
 
 const routeService = require("../services/routeService");
 
+router.get("/checkroute", async (req, res) => {
+  try {
+    const response = await routeService.checkAvailableRoutes(req.body);
+    res.status(200);
+    res.send(response);
+  } catch (error) {
+    res.status(400);
+    res.send({
+      message: error.message,
+      statusCode: 400,
+    });
+  }
+});
+
 router.get("/getall", async (req, res) => {
   try {
     const response = await routeService.getAllRoutes();
