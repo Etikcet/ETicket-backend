@@ -7,6 +7,15 @@ const routeSchema = yup.object().shape({
   finish: yup.string().required(),
 });
 
+async function checkAvailableRoutes(data) {
+  try {
+    const res = await routeRepository.checkAvailableRoutes(data);
+    return res.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getAllRoutes() {
   try {
     const res = await routeRepository.getAllRoutes();
@@ -84,4 +93,5 @@ module.exports = {
   getRoute,
   getAllRoutes,
   deleteRoute,
+  checkAvailableRoutes,
 };
