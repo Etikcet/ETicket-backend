@@ -5,6 +5,19 @@ const router = express.Router();
 
 const routeService = require("../services/routeService");
 
+router.get("/stations", async (req, res) => {
+  try {
+    const response = await routeService.getStartingAndEndingStations();
+    res.status(200);
+    res.send({
+      data: response,
+    });
+  } catch (error) {
+    res.status(400);
+    res.send(error.message);
+  }
+});
+
 router.get("/checkroute", async (req, res) => {
   try {
     const response = await routeService.checkAvailableRoutes(req.body);

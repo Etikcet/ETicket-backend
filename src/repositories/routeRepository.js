@@ -13,6 +13,15 @@ async function checkAvailableRoutes(details) {
   }
 }
 
+async function getStartingAndEndingStations() {
+  try {
+    const res = await pool.query("SELECT Start,Finish from Route");
+    return res;
+  } catch (error) {
+    throw Error("Internal Sever Error");
+  }
+}
+
 async function getAllRoutes() {
   try {
     const res = await pool.query("SELECT * FROM Route");
@@ -59,4 +68,5 @@ module.exports = {
   getAllRoutes,
   deleteRoute,
   checkAvailableRoutes,
+  getStartingAndEndingStations,
 };
