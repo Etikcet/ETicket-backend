@@ -18,7 +18,7 @@ router.get("/stations", async (req, res) => {
   }
 });
 
-router.get("/checkroute", async (req, res) => {
+router.post("/checkroute", async (req, res) => {
   try {
     const response = await routeService.checkAvailableRoutes(req.body);
     res.status(200);
