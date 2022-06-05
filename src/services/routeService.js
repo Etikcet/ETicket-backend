@@ -1,10 +1,14 @@
 const yup = require("yup");
+const uuid = require("uuid");
 const routeRepository = require("../repositories/routeRepository");
 
 const routeSchema = yup.object().shape({
-  ID: yup.string().required(),
+  bus_number: yup.string().required(),
   start: yup.string().required(),
   finish: yup.string().required(),
+  arrival_time: yup.string().required(),
+  departure_time: yup.string().required(),
+  price: yup.number().required(),
 });
 
 async function getStartingAndEndingStations() {
@@ -54,24 +58,24 @@ async function getRoute(ID) {
 async function addRoute(route) {
   try {
     await routeSchema.validate({
-      ID: route.ID,
+      bus_number: route.busNumber,
       start: route.start,
       finish: route.finish,
+      arrival_time: route.arrivalTime,
+      departure_time: route.departureTime,
+      price: route.price,
     });
   } catch (error) {
     throw Error("Validation Error");
   }
+  const data = {
+    ID: uuid.v4(),
+    ...route,
+  };
+
   try {
-    const res = await routeRepository.getRoute(route.ID);
-    if (res?.rowCount !== 0) {
-      throw Error("Route already exists");
-    }
-  } catch (e) {
-    throw e;
-  }
-  try {
-    const res = await routeRepository.addRoute(route);
-    return route;
+    const res = await routeRepository.addRoute(data);
+    return data;
   } catch (error) {
     throw error;
   }
