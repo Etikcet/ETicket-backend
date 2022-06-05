@@ -9,8 +9,6 @@ CREATE TABLE Schedule (ID varchar(36),Bus_ID varchar(36),Date date,Departure var
 
 CREATE TABLE Users (ID varchar(36),Username varchar(30),Password varchar(255),Name varchar(50),User_Type varchar(15),Phone_Number varchar(10),PRIMARY KEY (ID));
 
-CREATE TABLE Booking (ID varchar(36),User_ID varchar(36),Bus_ID varchar(36),Schedule_ID varchar(36),Start varchar(50),Finish varchar(50),Amount decimal(15,2),Status varchar(15),PRIMARY KEY (ID), FOREIGN KEY (Schedule_ID) REFERENCES Schedule(ID),FOREIGN KEY (Bus_ID) REFERENCES Bus(ID),FOREIGN KEY (User_ID) REFERENCES Users(ID));
+CREATE TABLE Booking (ID varchar(36),User_ID varchar(36),Route_ID varchar(36),Price decimal(15,2),Status varchar(15),PRIMARY KEY (ID), FOREIGN KEY (Route_ID) REFERENCES Route(ID),FOREIGN KEY (User_ID) REFERENCES Users(ID));
 
-
-GRANT ALL PRIVILEGES ON DATABASE SEEticket TO database_user;
 ```

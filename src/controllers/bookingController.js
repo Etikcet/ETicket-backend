@@ -24,7 +24,7 @@ router.post("/search", async (req, res) => {
 
 router.post(
   "/add",
-  (req, res, next) => authenticateToken(req, res, next, "ADMIN"),
+  (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
   async (req, res) => {
     try {
       const response = await bookingService.addBooking(req.body);
