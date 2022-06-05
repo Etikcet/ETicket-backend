@@ -41,14 +41,16 @@ async function getRoute(ID) {
 }
 
 async function addRoute(route) {
-  const { ID, start, finish } = route;
+  const { ID, busNumber, start, finish, arrivalTime, departureTime, price } =
+    route;
   try {
     const res = await pool.query(
-      "INSERT INTO Route (ID,Start,Finish) values ($1,$2,$3)",
-      [ID, start, finish]
+      "INSERT INTO Route (ID,bus_number,Start,Finish,arrival_time,departure_time,price) values ($1,$2,$3,$4,$5,$6,$7)",
+      [ID, busNumber, start, finish, arrivalTime, departureTime, price]
     );
     return true;
   } catch (error) {
+    console.log("error: ", error);
     throw Error("Internal Server Error");
   }
 }
