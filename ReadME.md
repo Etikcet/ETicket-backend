@@ -1,7 +1,7 @@
 Sql codes to initialize the database tables
 
 ```sql
-CREATE TABLE Route (ID varchar(36),Start varchar(50),Finish varchar(50),PRIMARY KEY (ID));
+CREATE TABLE Route (ID varchar(36),Bus_Number varchar(10),Start varchar(50),Finish varchar(50),Arrival_Time varchar(10),Departure_time varchar(10),price NUMERIC(10,2),PRIMARY KEY (ID));
 
 CREATE TABLE Bus (ID varchar(36),Route_ID varchar(36),Seat int,Driver varchar(50),Conductor varchar(50),PRIMARY KEY (ID),FOREIGN KEY (Route_ID) REFERENCES Route(ID));
 
