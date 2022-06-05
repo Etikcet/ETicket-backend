@@ -4,8 +4,8 @@ async function checkAvailableRoutes(details) {
   const { start, finish, date, seats } = details;
   try {
     const res = await pool.query(
-      "SELECT route.id AS route_id,bus.id AS bus_id,start,finish,seat,driver,conductor,contact_number FROM Route,bus WHERE Route.id = Bus.route_id AND start = $1 AND finish = $2 AND seat < $3",
-      [start, finish, seats]
+      "SELECT * from Route where start = $1 AND finish = $2",
+      [start, finish]
     );
     return res;
   } catch (error) {
