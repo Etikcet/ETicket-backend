@@ -1,5 +1,16 @@
 const pool = require("../config/database.conf");
 
+async function getBookingForUser(userId) {
+  try {
+    const res = await pool.query("SELECT * FROM booking where user_id = $1", [
+      userId,
+    ]);
+    return res;
+  } catch (error) {
+    throw Error("Internal Server Error");
+  }
+}
+
 async function searchBookingAvailabality({ start, finish }) {
   try {
     const res = await pool.query(
@@ -29,4 +40,5 @@ async function addBooking(booking) {
 module.exports = {
   addBooking,
   searchBookingAvailabality,
+  getBookingForUser,
 };

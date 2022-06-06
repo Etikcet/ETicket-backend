@@ -14,6 +14,15 @@ const bookingSchema = yup.object().shape({
   status: yup.string().required(),
 });
 
+async function getBookingForUser(userId) {
+  try {
+    const res = await bookingRepository.getBookingForUser(userId);
+    return res.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function searchBookingAvailability(data) {
   try {
     await searchSchema.validate({ start: data.start, end: data.finish });
@@ -53,4 +62,5 @@ async function addBooking(booking) {
 module.exports = {
   addBooking,
   searchBookingAvailability,
+  getBookingForUser,
 };
