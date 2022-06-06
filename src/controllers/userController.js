@@ -23,10 +23,10 @@ router.post("/signup", async (req, res) => {
     const user = await userService.signUpUser(req.body);
     const data = {
       ...user,
-      statusCode: 200,
+      statusCode: 201,
       message: "User registered succesfully!",
     };
-    res.status(200);
+    res.status(201);
     res.send(data);
   } catch (e) {
     res.status(400);
