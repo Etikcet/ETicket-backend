@@ -6,6 +6,27 @@ const router = express.Router();
 
 const bookingService = require("../services/bookingService");
 
+router.get(
+  "/mybookings",
+  (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
+  async (req, res) => {
+    try {
+      const data = await bookingService.getBookingForUser(req.user.ID);
+      res.status(200);
+      res.send({
+        bookings: data,
+        statusCode: 200,
+      });
+    } catch (error) {
+      res.status(400);
+      res.send({
+        statusCode: 400,
+        message: error.message,
+      });
+    }
+  }
+);
+
 router.post("/search", async (req, res) => {
   try {
     const data = await bookingService.searchBookingAvailability(req.body);
@@ -24,7 +45,7 @@ router.post("/search", async (req, res) => {
 
 router.post(
   "/add",
-  (req, res, next) => authenticateToken(req, res, next, "ADMIN"),
+  (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
   async (req, res) => {
     try {
       const response = await bookingService.addBooking(req.body);
