@@ -1,5 +1,16 @@
 const pool = require("../config/database.conf");
 
+async function updateStatus(bookingId) {
+  try {
+    const res = await pool.query(
+      "UPDATE booking SET status = 'COMPLETED' WHERE id = $1",
+      [bookingId]
+    );
+  } catch (error) {
+    throw Error("Internal Server Error");
+  }
+}
+
 async function getBookingForUser(userId) {
   try {
     const res = await pool.query("SELECT * FROM booking where user_id = $1", [
@@ -41,4 +52,5 @@ module.exports = {
   addBooking,
   searchBookingAvailabality,
   getBookingForUser,
+  updateStatus,
 };

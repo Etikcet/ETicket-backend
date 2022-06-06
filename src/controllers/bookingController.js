@@ -7,11 +7,31 @@ const router = express.Router();
 const bookingService = require("../services/bookingService");
 
 router.get(
+  "/update/:ID",
+  (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
+  async (req, res) => {
+    try {
+      await bookingService.updateBookingStatus(req.params.ID);
+      res.status(201);
+      res.send({
+        message: "Booking status updated succesfully",
+        statusCode: 201,
+      });
+    } catch (error) {
+      res.status(400);
+      res.send({
+        message: error.message,
+        statusCode: 400,
+      });
+    }
+  }
+);
+
+router.get(
   "/mybookings",
   (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
   async (req, res) => {
     try {
-      console.log("Request is: ", req.user);
       const data = await bookingService.getBookingForUser(req.user.ID);
       res.status(200);
       res.send({

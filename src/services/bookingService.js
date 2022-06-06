@@ -16,6 +16,15 @@ const bookingSchema = yup.object().shape({
   seats: yup.number().required(),
 });
 
+async function updateBookingStatus(bookingId) {
+  try {
+    await bookingRepository.updateStatus(bookingId);
+    return true;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getBookingForUser(userId) {
   try {
     const res = await bookingRepository.getBookingForUser(userId);
@@ -67,4 +76,5 @@ module.exports = {
   addBooking,
   searchBookingAvailability,
   getBookingForUser,
+  updateBookingStatus,
 };
