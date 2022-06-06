@@ -24,11 +24,11 @@ async function searchBookingAvailabality({ start, finish }) {
 }
 
 async function addBooking(booking) {
-  const { id, userId, routeId, price, status } = booking;
+  const { id, userId, routeId, price, status, date, seats } = booking;
   try {
     const res = await pool.query(
-      "INSERT INTO Booking(id,user_id,route_id,price,status) VALUES ($1,$2,$3,$4,$5)",
-      [id, userId, routeId, price, status]
+      "INSERT INTO Booking(id,user_id,route_id,price,status,date,seats) VALUES ($1,$2,$3,$4,$5,$6,$7)",
+      [id, userId, routeId, price, status, date, seats]
     );
     return booking;
   } catch (error) {

@@ -12,6 +12,8 @@ const bookingSchema = yup.object().shape({
   routeId: yup.string().required(),
   price: yup.number().required(),
   status: yup.string().required(),
+  date: yup.string().required(),
+  seats: yup.number().required(),
 });
 
 async function getBookingForUser(userId) {
@@ -44,6 +46,8 @@ async function addBooking(booking) {
       routeId: booking.routeId,
       price: booking.price,
       status: booking.status,
+      date: booking.date,
+      seats: booking.seats,
     });
   } catch (error) {
     throw Error("Validation Error");
