@@ -64,27 +64,23 @@ router.post("/search", async (req, res) => {
   }
 });
 
-router.post(
-  "/add",
-  (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
-  async (req, res) => {
-    try {
-      const response = await bookingService.addBooking(req.body);
-      res.status(201);
-      res.send({
-        data: {
-          booking: {
-            ...response,
-          },
-          statusCode: 201,
-          message: "Booking added succesfully",
+router.post("/add", async (req, res) => {
+  try {
+    const response = await bookingService.addBooking(req.body);
+    res.status(201);
+    res.send({
+      data: {
+        booking: {
+          ...response,
         },
-      });
-    } catch (error) {
-      res.status(400);
-      res.send(error.message);
-    }
+        statusCode: 201,
+        message: "Booking added succesfully",
+      },
+    });
+  } catch (error) {
+    res.status(400);
+    res.send(error.message);
   }
-);
+});
 
 module.exports = router;
