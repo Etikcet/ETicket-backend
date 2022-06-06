@@ -19,7 +19,7 @@ const logInSchema = yup.object().shape({
 });
 
 function generateAccessToken(userObj) {
-  return jwt.sign(userObj, process.env.TOKEN_SECRET, { expiresIn: "3600s" });
+  return jwt.sign(userObj, process.env.TOKEN_SECRET, { expiresIn: "10800s" });
 }
 
 async function logInUser(username, password) {
