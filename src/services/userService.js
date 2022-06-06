@@ -55,7 +55,7 @@ async function logInUser(username, password) {
             token: generateAccessToken({
               username: username,
               userType: userObj.user_type,
-              ID: userObj.ID,
+              ID: userObj.id,
             }),
           },
         });

@@ -11,6 +11,7 @@ router.get(
   (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
   async (req, res) => {
     try {
+      console.log("Request is: ", req.user);
       const data = await bookingService.getBookingForUser(req.user.ID);
       res.status(200);
       res.send({
