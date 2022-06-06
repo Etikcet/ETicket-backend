@@ -5,6 +5,20 @@ const router = express.Router();
 
 const routeService = require("../services/routeService");
 
+router.get("/popular", async (req, res) => {
+  try {
+    const response = await routeService.getPopularRoutes();
+    res.status(200);
+    res.send({
+      routes: response,
+      statusCode: 200,
+    });
+  } catch (error) {
+    res.status(400);
+    res.send(error.message);
+  }
+});
+
 router.get("/stations", async (req, res) => {
   try {
     const response = await routeService.getStartingAndEndingStations();

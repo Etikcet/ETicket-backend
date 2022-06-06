@@ -1,5 +1,16 @@
 const pool = require("../config/database.conf");
 
+async function getPopularRoutes() {
+  try {
+    const res = await pool.query(
+      "SELECT * from route WHERE id IN (Select route_id from (SELECT route_id,COUNT(route_id) AS route_count from booking GROUP BY route_id ORDER BY route_count DESC) AS popular)"
+    );
+    return res;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+}
+
 async function checkAvailableRoutes(details) {
   const { start, finish, date, seats } = details;
   try {
@@ -71,4 +82,5 @@ module.exports = {
   deleteRoute,
   checkAvailableRoutes,
   getStartingAndEndingStations,
+  getPopularRoutes,
 };

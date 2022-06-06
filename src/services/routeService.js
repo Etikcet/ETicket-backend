@@ -11,6 +11,15 @@ const routeSchema = yup.object().shape({
   price: yup.number().required(),
 });
 
+async function getPopularRoutes() {
+  try {
+    const res = await routeRepository.getPopularRoutes();
+    return res.rows;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getStartingAndEndingStations() {
   try {
     const res = await routeRepository.getStartingAndEndingStations();
@@ -108,4 +117,5 @@ module.exports = {
   deleteRoute,
   checkAvailableRoutes,
   getStartingAndEndingStations,
+  getPopularRoutes,
 };
