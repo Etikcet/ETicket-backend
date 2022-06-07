@@ -29,7 +29,7 @@ router.get(
 
 router.get(
   "/mybookings",
-  (req, res, next) => authenticateToken(req, res, next, "CUSTOMER"),
+  (req, res, next) => authenticateToken(req, res, next, "ALL"),
   async (req, res) => {
     try {
       const data = await bookingService.getBookingForUser(req.user.ID);
